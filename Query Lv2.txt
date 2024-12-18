@@ -1,0 +1,76 @@
+-- 1. Conta il numero di articoli scritti da ogni utente.
+
+SELECT Utenti.id_utente, Utenti.nome, Utenti.cognome, COUNT(Articoli.id_articolo) AS numero_articoli
+FROM Utenti
+JOIN Articoli ON Utenti.id_utente = Articoli.id_utente
+GROUP BY Utenti.id_utente, Utenti.nome, Utenti.cognome;
+
+-- 2. Trova la categoria con il maggior numero di articoli associati.
+
+SELECT Categorie.nome_categoria, COUNT(Articoli_Categorie.id_articolo) AS numero_articoli
+FROM Categorie
+JOIN Articoli_Categorie ON Categorie.id_categoria = Articoli_Categorie.id_categoria
+GROUP BY Categorie.nome_categoria
+ORDER BY numero_articoli DESC
+LIMIT 1;
+
+-- 3. Recupera gli utenti che hanno scritto più di 2 articoli.
+
+SELECT Utenti.id_utente, Utenti.nome, Utenti.cognome, COUNT(Articoli.id_articolo) AS numero_articoli
+FROM Utenti
+JOIN Articoli ON Utenti.id_utente = Articoli.id_utente
+GROUP BY Utenti.id_utente, Utenti.nome, Utenti.cognome
+HAVING numero_articoli > 2;
+
+-- 4. Calcola la data di pubblicazione più recente per ogni categoria.
+
+SELECT Categorie.nome_categoria, MAX(Articoli.data_pubblicazione) AS data_recente
+FROM Categorie
+JOIN Articoli_Categorie ON Categorie.id_categoria = Articoli_Categorie.id_categoria
+JOIN Articoli ON Articoli_Categorie.id_articolo = Articoli.id_articolo
+GROUP BY Categorie.nome_categoria;
+
+-- 5. Trova il numero medio di articoli per utente.
+
+SELECT AVG(COUNT(Articoli.id_articolo)) AS numero_medio_articoli
+FROM Utenti
+LEFT JOIN Articoli ON Utenti.id_utente = Articoli.id_utente
+GROUP BY Utenti.id_utente;
+
+-- 6. Recupera le categorie che hanno almeno 3 articoli associati.
+
+SELECT Categorie.nome_categoria, COUNT(Articoli_Categorie.id_articolo) AS numero_articoli
+FROM Categorie
+JOIN Articoli_Categorie ON Categorie.id_categoria = Articoli_Categorie.id_categoria
+GROUP BY Categorie.nome_categoria
+HAVING numero_articoli >= 3;
+
+-- 7. Calcola il totale degli articoli pubblicati per ogni mese del 2024.
+
+SELECT DATE_FORMAT(Articoli.data_pubblicazione, '%Y-%m') AS mese, COUNT(Articoli.id_articolo) AS totale_articoli
+FROM Articoli
+WHERE YEAR(Articoli.data_pubblicazione) = 2024
+GROUP BY mese
+ORDER BY mese;
+
+-- 8. Trova l'utente che ha la data di iscrizione più antica.
+
+SELECT id_utente, nome, cognome, data_iscrizione
+FROM Utenti
+ORDER BY data_iscrizione ASC
+LIMIT 1;
+
+-- 9. Recupera le categorie e il numero di articoli associati a ciascuna, ordinati dal più al meno.
+
+SELECT Categorie.nome_categoria, COUNT(Articoli_Categorie.id_articolo) AS numero_articoli
+FROM Categorie
+JOIN Articoli_Categorie ON Categorie.id_categoria = Articoli_Categorie.id_categoria
+GROUP BY Categorie.nome_categoria
+ORDER BY numero_articoli DESC;
+
+-- 10. Calcola il numero totale di articoli pubblicati da utenti iscritti nel 2024.
+
+SELECT COUNT(Articoli.id_articolo) AS totale_articoli
+FROM Articoli
+JOIN Utenti ON Articoli.id_utente = Utenti.id_utente
+WHERE YEAR(Utenti.data_iscrizione) = 2024;

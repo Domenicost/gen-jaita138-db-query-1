@@ -1,34 +1,34 @@
--- Recupera tutti gli utenti registrati nel sistema.
+-- 1. Recupera tutti gli utenti registrati nel sistema.
 
 SELECT *
 FROM Utenti u;
 
--- Recupera il nome, cognome e email di tutti gli utenti iscritti dopo il 1° marzo 2024.
+-- 2. Recupera il nome, cognome e email di tutti gli utenti iscritti dopo il 1° marzo 2024.
 
 SELECT nome, cognome, email
 FROM Utenti
 WHERE data_iscrizione > '2024-03-01';
 
--- Recupera tutti gli articoli insieme al nome e cognome dell'autore.
+-- 3. Recupera tutti gli articoli insieme al nome e cognome dell'autore.
 
 SELECT Utenti.nome, Utenti.cognome, Articoli.titolo
 FROM Articoli
 JOIN Utenti ON Articoli.id_utente = Utenti.id_utente;
 
--- Recupera i titoli degli articoli pubblicati nel mese di maggio 2024.
+-- 4. Recupera i titoli degli articoli pubblicati nel mese di maggio 2024.
 
 SELECT titolo
 FROM Articoli
 WHERE data_pubblicazione BETWEEN '2024-05-01' AND '2024-05-31';
 
--- Recupera le prime 5 categorie ordinate alfabeticamente per nome.
+-- 5. Recupera le prime 5 categorie ordinate alfabeticamente per nome.
 
 SELECT *
 FROM Categorie
 ORDER BY nome_categoria ASC
 LIMIT 5;
 
--- Recupera gli articoli che appartengono alla categoria 'Tecnologia'.
+-- 6. Recupera gli articoli che appartengono alla categoria 'Tecnologia'.
 
 SELECT Articoli.*
 FROM Articoli
@@ -36,26 +36,26 @@ JOIN Articoli_Categorie ON Articoli.id_articolo = Articoli_Categorie.id_articolo
 JOIN Categorie ON Articoli_Categorie.id_categoria = Categorie.id_categoria
 WHERE Categorie.nome_categoria = 'Tecnologia';
 
--- Recupera le email degli utenti che hanno scritto almeno un articolo.
+-- 7. Recupera le email degli utenti che hanno scritto almeno un articolo.
 
 SELECT Utenti.email
 FROM Utenti
 JOIN Articoli ON Utenti.id_utente = Articoli.id_utente
 
--- Recupera tutti gli articoli pubblicati tra il 1° giugno 2024 e il 31 agosto 2024.
+-- 8. Recupera tutti gli articoli pubblicati tra il 1° giugno 2024 e il 31 agosto 2024.
 
 SELECT *
 FROM Articoli
 WHERE data_pubblicazione BETWEEN '2024-06-01' AND '2024-08-31';
 
--- Recupera i dettagli delle categorie associate all'articolo con id_articolo = 10.
+-- 9. Recupera i dettagli delle categorie associate all'articolo con id_articolo = 10.
 
 SELECT Categorie.*
 FROM Categorie
 JOIN Articoli_Categorie ON Categorie.id_categoria = Articoli_Categorie.id_categoria
 WHERE Articoli_Categorie.id_articolo = 10;
 
--- Recupera i nomi degli utenti ordinati per data di iscrizione più recente.
+-- 10. Recupera i nomi degli utenti ordinati per data di iscrizione più recente.
 
 SELECT nome, cognome
 FROM Utenti
